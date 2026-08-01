@@ -161,14 +161,6 @@ form {
   width: 100%;
   flex: 1 1 auto;
   min-width: 0;
-  /* Material (mat-mdc-select-value/value-text) cắt overflow: hidden —
-     nút ✕ tròn bị "xẻ" mép phải. Cho thoát ra ngoài để ✕ tròn đầy đủ. */
-  overflow: visible;
-}
-
-.mat-mdc-select-value,
-.mat-mdc-select-value-text {
-  overflow: visible !important;
 }
 
 .select-value-text {

@@ -109,9 +109,6 @@
                   <span class="select-placeholder">Chọn trạng thái</span>
                 }
               </mat-select-trigger>
-              @if (!isEdit) {
-                <mat-option value="">Không chọn trạng thái</mat-option>
-              }
               @for (st of statuses; track st.value) {
                 <mat-option [value]="st.value">{{ st.label }}</mat-option>
               }

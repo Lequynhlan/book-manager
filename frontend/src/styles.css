@@ -131,6 +131,53 @@ mat-icon {
   gap: 8px;
 }
 
+/* ===== Toast (MatSnackBar) — góc trên phải, có icon ===== */
+.app-toast {
+  border-radius: 10px !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18) !important;
+  min-width: 280px;
+  max-width: 420px;
+}
+
+.app-toast .mdc-snackbar__surface {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+}
+
+.app-toast .mat-mdc-snack-bar-label {
+  padding: 0 !important;
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 14px 16px;
+  border-radius: 10px;
+}
+
+.toast-icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  line-height: 20px;
+  flex-shrink: 0;
+}
+
+.app-toast-success .toast-content {
+  background: #16a34a;
+}
+
+.app-toast-error .toast-content {
+  background: #dc2626;
+}
+
+/* Icon trong option dropdown (panel ngoài component): ép khung 14px + căn giữa.
+   Glyph Material lệch tâm quang học theo từng icon — "Đang đọc" trôi xuống. */
 .mat-mdc-option[aria-label*="Đang đọc"] .mat-icon,
 .mat-mdc-option[aria-label*="Đang đọc"] .icon-inline {
   translate: 0 -1px;
@@ -139,4 +186,16 @@ mat-icon {
 /* Khi select đã chọn giá trị (class has-value): ẩn mũi tên, chỉ còn ✕ */
 .has-value .mat-mdc-select-arrow {
   display: none !important;
+}
+
+/* ✕ xóa chọn bị Material cắt mép phải (mat-mdc-select-value/value-text
+   overflow:hidden + text-overflow:ellipsis + padding) — ép về đúng mép phải
+   của ô và cho thoát khỏi vùng cắt để vòng tròn ✕ không bị "xẻ". */
+.mat-mdc-select-value,
+.mat-mdc-select-value-text {
+  overflow: visible !important;
+}
+
+.material-select .mat-mdc-select-trigger {
+  padding-right: 8px;
 }

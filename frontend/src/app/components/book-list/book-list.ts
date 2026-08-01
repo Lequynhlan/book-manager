@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { bookStatusIcon, bookStatusLabel } from '../../models/book-status';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-book-list',
@@ -50,7 +51,8 @@ export class BookListComponent implements OnInit {
   constructor(
     private bookService: BookService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private toast: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -140,10 +142,13 @@ export class BookListComponent implements OnInit {
     const book = this.pendingDelete;
     this.pendingDelete = null;
     this.bookService.delete(book.id).subscribe({
-      next: () => this.loadBooks(),
+      next: () => {
+        this.toast.success(`Đã xóa "${book.title}" thành công`);
+        this.loadBooks();
+      },
       error: (err: HttpErrorResponse) => {
         const body = err.error as ErrorResponse;
-        alert(body?.message || 'Xóa sách thất bại');
+        this.toast.error(body?.message || 'Xóa sách thất bại');
       },
     });
   }

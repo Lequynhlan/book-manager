@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { BOOK_STATUSES, bookStatusIcon, bookStatusLabel } from '../../models/book-status';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-book-form',
@@ -38,7 +39,8 @@ export class BookFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private bookService: BookService
+    private bookService: BookService,
+    private toast: ToastService
   ) {
     this.form = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(200)]],
@@ -112,11 +114,14 @@ export class BookFormComponent implements OnInit {
       : this.bookService.create(payload);
 
     request.subscribe({
-      next: () => this.saved.emit(),
+      next: () => {
+        this.toast.success(this.isEdit ? 'Đã cập nhật thông tin sách thành công' : 'Đã thêm sách mới thành công');
+        this.saved.emit();
+      },
       error: (err: HttpErrorResponse) => {
         this.loading = false;
         const body = err.error as ErrorResponse;
-        this.errorMessage = body?.message || 'Lưu sách thất bại, vui lòng thử lại';
+        this.toast.error(body?.message || 'Lưu sách thất bại, vui lòng thử lại');
         if (body?.fieldErrors) {
           this.fieldErrors = body.fieldErrors;
         }
