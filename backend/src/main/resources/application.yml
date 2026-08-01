@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: book-app-backend
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/bookdb}
+    username: ${DB_USERNAME:bookapp}
+    password: ${DB_PASSWORD:bookapp123}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  jackson:
+    time-zone: UTC
+
+server:
+  port: 8080
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:BookAppLocalDevelopmentSecretKeyMustBeChangedBeforeProduction20252!}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+
+logging:
+  level:
+    org.hibernate.SQL: warn

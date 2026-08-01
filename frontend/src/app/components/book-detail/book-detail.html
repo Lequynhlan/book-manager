@@ -1,0 +1,77 @@
+<div class="modal-overlay" (click)="closed.emit()">
+  <div class="modal book-detail-modal" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" [attr.aria-label]="book.title">
+    <div class="modal-header">
+      <h3><mat-icon class="icon-inline" aria-hidden="true">menu_book</mat-icon> Chi tiết sách</h3>
+      <button class="modal-close" (click)="closed.emit()" aria-label="Đóng"><mat-icon>close</mat-icon></button>
+    </div>
+
+    <div class="modal-body">
+      <div class="detail-hero">
+        @if (book.coverUrl) {
+          <img
+            class="detail-cover"
+            [src]="book.coverUrl"
+            [alt]="book.title"
+            (error)="$event.target.src = 'assets/no-cover.png'"
+          />
+        } @else {
+          <div class="detail-cover-placeholder">{{ book.title.charAt(0) }}</div>
+        }
+        <div class="detail-head">
+          <h2 class="detail-title">{{ book.title }}</h2>
+          <p class="detail-author"><mat-icon class="icon-inline" aria-hidden="true">person_edit</mat-icon>{{ book.author || 'Chưa rõ tác giả' }}</p>
+          <div class="detail-meta">
+            @if (book.category) {
+              <span class="badge badge-category">{{ book.category }}</span>
+            }
+            <span class="badge" [ngClass]="statusClass(book.status)"><mat-icon class="icon-inline" aria-hidden="true">{{ statusIcon(book.status) }}</mat-icon>{{ statusLabel(book.status) }}</span>
+            @if (book.rating > 0) {
+              <span class="rating"><mat-icon class="icon-inline" aria-hidden="true">star</mat-icon>{{ book.rating }}/5</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-grid">
+        @if (book.startedDate) {
+          <div class="detail-item">
+            <span class="detail-label"><mat-icon class="icon-inline" aria-hidden="true">calendar_today</mat-icon>Ngày bắt đầu</span>
+            <span class="detail-value">{{ book.startedDate | date: 'dd/MM/yyyy' }}</span>
+          </div>
+        }
+        @if (book.finishedDate) {
+          <div class="detail-item">
+            <span class="detail-label"><mat-icon class="icon-inline" aria-hidden="true">flag</mat-icon>Ngày hoàn thành</span>
+            <span class="detail-value">{{ book.finishedDate | date: 'dd/MM/yyyy' }}</span>
+          </div>
+        }
+        @if (book.createdAt) {
+          <div class="detail-item">
+            <span class="detail-label"><mat-icon class="icon-inline" aria-hidden="true">schedule</mat-icon>Thêm vào lúc</span>
+            <span class="detail-value">{{ book.createdAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+        }
+      </div>
+
+      @if (book.description) {
+        <div class="detail-section">
+          <h4><mat-icon class="icon-inline" aria-hidden="true">notes</mat-icon>Ghi chú / Mô tả</h4>
+          <p class="detail-description">{{ book.description }}</p>
+        </div>
+      }
+
+      @if (book.link) {
+        <div class="detail-section">
+          <h4><mat-icon class="icon-inline" aria-hidden="true">link</mat-icon>Link tham khảo</h4>
+          <a class="detail-link" [href]="book.link" target="_blank" rel="noopener noreferrer">
+            {{ book.link }}
+          </a>
+        </div>
+      }
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-ghost" (click)="closed.emit()">Đóng</button>
+    </div>
+  </div>
+</div>

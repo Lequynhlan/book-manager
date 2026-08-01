@@ -1,0 +1,11 @@
+<div class="modal-overlay" (click)="cancelled.emit()">
+  <div class="modal" role="alertdialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <div class="confirm-icon"><mat-icon aria-hidden="true">delete</mat-icon></div>
+    <h3 class="confirm-title">{{ title }}</h3>
+    <p class="confirm-message">{{ message }}</p>
+    <div class="confirm-actions">
+      <button class="btn btn-ghost" (click)="cancelled.emit()">{{ cancelText }}</button>
+      <button class="btn" [ngClass]="confirmClass" (click)="confirmed.emit()">{{ confirmText }}</button>
+    </div>
+  </div>
+</div>

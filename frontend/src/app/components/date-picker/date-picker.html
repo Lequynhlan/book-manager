@@ -1,0 +1,42 @@
+<div class="date-picker">
+  <div class="date-input" [class.disabled]="disabled" [class.open]="open" (click)="toggle()">
+    <span class="date-value" [class.placeholder]="!value">{{ value ? displayValue : placeholder }}</span>
+    <mat-icon class="date-icon" aria-hidden="true">calendar_month</mat-icon>
+  </div>
+
+  @if (open) {
+    <div class="date-panel" [ngStyle]="panelStyle">
+      <div class="dp-header">
+        <button type="button" class="dp-nav" (click)="prevMonth()" aria-label="Tháng trước"><mat-icon>chevron_left</mat-icon></button>
+        <span class="dp-title">Tháng {{ viewMonth + 1 }} năm {{ viewYear }}</span>
+        <button type="button" class="dp-nav" (click)="nextMonth()" aria-label="Tháng sau"><mat-icon>chevron_right</mat-icon></button>
+      </div>
+
+      <div class="dp-weekdays">
+        @for (w of weekdays; track w) {
+          <span>{{ w }}</span>
+        }
+      </div>
+
+      <div class="dp-grid">
+        @for (d of days; track $index) {
+          <button
+            type="button"
+            class="dp-day"
+            [class.out]="isOutOfMonth(d)"
+            [class.today]="isToday(d)"
+            [class.selected]="isSelected(d)"
+            (click)="selectDay(d)"
+          >
+            {{ d.getDate() }}
+          </button>
+        }
+      </div>
+
+      <div class="dp-footer">
+        <button type="button" class="dp-link" (click)="clearValue()">Xóa</button>
+        <button type="button" class="dp-link" (click)="selectToday()">Hôm nay</button>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,182 @@
+<div class="modal-overlay" (click)="cancelled.emit()">
+  <div class="modal book-form-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>{{ isEdit ? 'Sửa thông tin sách' : 'Thêm sách mới' }}</h3>
+      <button type="button" class="modal-close" (click)="cancelled.emit()" aria-label="Đóng"><mat-icon>close</mat-icon></button>
+    </div>
+
+    @if (errorMessage) {
+      <div class="alert alert-error">{{ errorMessage }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-row">
+        <div class="form-group form-group-full">
+          <label for="title">Tiêu đề sách <span class="required-marker" aria-hidden="true">*</span></label>
+          <input id="title" type="text" formControlName="title" placeholder="Nhập tiêu đề sách" />
+          @if (form.controls['title'].touched && form.controls['title'].invalid) {
+            <div class="field-error">Tiêu đề là bắt buộc (tối đa 200 ký tự)</div>
+          }
+          @if (fieldErrors['title']) {
+            <div class="field-error">{{ fieldErrors['title'] }}</div>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="author">Tác giả</label>
+          <input id="author" type="text" formControlName="author" placeholder="Nhập tác giả" />
+          @if (fieldErrors['author']) {
+            <div class="field-error">{{ fieldErrors['author'] }}</div>
+          }
+        </div>
+        <div class="form-group">
+          <label for="category">Thể loại</label>
+          <mat-form-field
+            appearance="outline"
+            class="material-select"
+            subscriptSizing="dynamic"
+            [class.has-value]="!!form.controls['category'].value"
+          >
+            <mat-select
+              id="category"
+              formControlName="category"
+              aria-label="Thể loại"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-select-trigger>
+                @if (form.controls['category'].value) {
+                  <span class="select-value">
+                    <span class="select-value-text">{{ form.controls['category'].value }}</span>
+                    <button
+                      type="button"
+                      class="select-clear"
+                      aria-label="Bỏ chọn thể loại"
+                      (click)="$event.stopPropagation(); onClear('category')"
+                    >
+                      <mat-icon aria-hidden="true">close</mat-icon>
+                    </button>
+                  </span>
+                } @else {
+                  <span class="select-placeholder">Chọn thể loại</span>
+                }
+              </mat-select-trigger>
+              @if (!isEdit) {
+                <mat-option value="">Chọn thể loại</mat-option>
+              }
+              @for (cat of categoryOptions; track cat) {
+                <mat-option [value]="cat">{{ cat }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          @if (fieldErrors['category']) {
+            <div class="field-error">{{ fieldErrors['category'] }}</div>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="status">Trạng thái</label>
+          <mat-form-field
+            appearance="outline"
+            class="material-select"
+            subscriptSizing="dynamic"
+            [class.has-value]="!!form.controls['status'].value"
+          >
+            <mat-select
+              id="status"
+              formControlName="status"
+              aria-label="Trạng thái"
+              placeholder="Chọn trạng thái"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-select-trigger>
+                @if (form.controls['status'].value) {
+                  <span class="select-value">
+                    <span class="select-value-text">{{ statusLabel(form.controls['status'].value) }}</span>
+                    <button
+                      type="button"
+                      class="select-clear"
+                      aria-label="Bỏ chọn trạng thái"
+                      (click)="$event.stopPropagation(); onClear('status')"
+                    >
+                      <mat-icon aria-hidden="true">close</mat-icon>
+                    </button>
+                  </span>
+                } @else {
+                  <span class="select-placeholder">Chọn trạng thái</span>
+                }
+              </mat-select-trigger>
+              @if (!isEdit) {
+                <mat-option value="">Không chọn trạng thái</mat-option>
+              }
+              @for (st of statuses; track st.value) {
+                <mat-option [value]="st.value">{{ st.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <label for="rating">Đánh giá (0-5)</label>
+          <input id="rating" type="number" formControlName="rating" min="0" max="5" step="1" placeholder="Nhập đánh giá từ 0 đến 5" />
+          @if (form.controls['rating'].touched && form.controls['rating'].invalid) {
+            <div class="field-error">Đánh giá từ 0 đến 5</div>
+          }
+          @if (fieldErrors['rating']) {
+            <div class="field-error">{{ fieldErrors['rating'] }}</div>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="startedDate">Ngày bắt đầu</label>
+          <app-date-picker id="startedDate" formControlName="startedDate" placeholder="dd/mm/yyyy" />
+        </div>
+        <div class="form-group">
+          <label for="finishedDate">Ngày hoàn thành</label>
+          <app-date-picker id="finishedDate" formControlName="finishedDate" placeholder="dd/mm/yyyy" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group form-group-full">
+          <label for="coverUrl">Ảnh bìa (URL)</label>
+          <input id="coverUrl" type="url" formControlName="coverUrl" placeholder="Nhập URL ảnh bìa" />
+          @if (fieldErrors['coverUrl']) {
+            <div class="field-error">{{ fieldErrors['coverUrl'] }}</div>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group form-group-full">
+          <label for="link">Link tham khảo</label>
+          <input id="link" type="url" formControlName="link" placeholder="Nhập link tham khảo" />
+          @if (fieldErrors['link']) {
+            <div class="field-error">{{ fieldErrors['link'] }}</div>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group form-group-full">
+          <label for="description">Ghi chú / Mô tả</label>
+          <textarea id="description" formControlName="description" rows="3" placeholder="Nhập ghi chú hoặc cảm nhận về cuốn sách"></textarea>
+          @if (fieldErrors['description']) {
+            <div class="field-error">{{ fieldErrors['description'] }}</div>
+          }
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" (click)="cancelled.emit()">Hủy</button>
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+          {{ loading ? 'Đang lưu...' : isEdit ? 'Lưu thay đổi' : 'Thêm sách' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

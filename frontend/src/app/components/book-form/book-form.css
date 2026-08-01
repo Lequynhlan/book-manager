@@ -1,0 +1,287 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #f1f5f9;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  border-radius: 16px 16px 0 0;
+  z-index: 1;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #1e293b;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #64748b;
+  padding: 4px 8px;
+  border-radius: 6px;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Material thêm focus indicator màu xanh + bóng khi nút bị focus (autofocus khi mở modal)
+   — tắt để nút luôn phẳng xám như thiết kế. */
+.modal-close:focus,
+.modal-close:focus-visible,
+.modal-close:active,
+.modal-close:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+  box-shadow: none;
+  outline: none;
+}
+
+.modal-close .mat-mdc-focus-indicator,
+.modal-close .mat-ripple,
+.modal-close .mat-mdc-button-persistent-ripple,
+.modal-close .mat-mdc-focus-indicator::before {
+  box-shadow: none !important;
+  background: none !important;
+  opacity: 0 !important;
+}
+
+.modal-close mat-icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+form {
+  padding: 20px 24px 24px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.form-group {
+  flex: 1;
+}
+
+.form-group-full {
+  flex: 1 1 100%;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 5px;
+}
+
+.required-marker {
+  color: #dc2626;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  font-family: inherit;
+  background: #fff;
+  color: #1e293b;
+}
+
+.form-group input {
+  height: 40px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
+.form-group .material-select {
+  width: 100%;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.field-error {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Dấu ✕ xóa chọn trong ô select (cạnh mũi tên) */
+.select-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
+  /* Material (mat-mdc-select-value/value-text) cắt overflow: hidden —
+     nút ✕ tròn bị "xẻ" mép phải. Cho thoát ra ngoài để ✕ tròn đầy đủ. */
+  overflow: visible;
+}
+
+.mat-mdc-select-value,
+.mat-mdc-select-value-text {
+  overflow: visible !important;
+}
+
+.select-value-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.select-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #475569;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: 0;
+  margin-right: -6px;
+  padding: 0;
+  line-height: 1;
+  transition: background 0.15s, color 0.15s;
+}
+
+.select-clear mat-icon {
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 600;
+}
+
+.select-clear:hover {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+/* Khi đã chọn giá trị: ẩn mũi tên dropdown, chỉ còn ✕ xóa chọn */
+.has-value .mat-mdc-select-arrow {
+  display: none !important;
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin: 0 24px 16px;
+}
+
+.alert-error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: #667eea;
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #5a6fd6;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+}
+
+.btn-ghost:hover {
+  background: #f1f5f9;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #f1f5f9;
+}
+
+@media (max-width: 640px) {
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .modal {
+    max-width: 100%;
+  }
+}
