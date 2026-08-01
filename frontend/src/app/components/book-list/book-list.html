@@ -1,0 +1,157 @@
+<div class="app-shell">
+  <!-- Header -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-logo"><mat-icon aria-hidden="true">local_library</mat-icon></span>
+        <span class="brand-name">Bookmark Manager</span>
+      </div>
+      <div class="topbar-right">
+        <span class="user-name">{{ userName }}</span>
+        <span class="user-avatar" aria-hidden="true">{{ userInitial }}</span>
+        <button class="btn btn-ghost btn-logout" (click)="logout()"><mat-icon aria-hidden="true">logout</mat-icon>Đăng xuất</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <h2>Tủ sách của tôi</h2>
+        <span class="book-count">{{ books().length }} cuốn</span>
+      </div>
+      <button class="btn btn-primary" (click)="openCreate()"><mat-icon aria-hidden="true">add</mat-icon>Thêm sách</button>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <div class="search-box">
+        <mat-icon class="search-icon" aria-hidden="true">search</mat-icon>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Tìm kiếm theo tên sách, tác giả..."
+          [ngModel]="keyword()"
+          (ngModelChange)="keyword.set($event); onSearchChange()"
+        />
+      </div>
+      <mat-form-field appearance="outline" class="material-select filter-field" subscriptSizing="dynamic">
+        <mat-select aria-label="Lọc theo thể loại" [value]="selectedCategory()" (selectionChange)="onCategoryChange($event.value)">
+          <mat-select-trigger>
+            @if (selectedCategory()) {
+              {{ selectedCategory() }}
+            } @else {
+              Tất cả thể loại
+            }
+          </mat-select-trigger>
+          <mat-option value="">Tất cả</mat-option>
+          @for (cat of categories(); track cat) {
+            <mat-option [value]="cat">{{ cat }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="material-select filter-field" subscriptSizing="dynamic">
+        <mat-select aria-label="Lọc theo trạng thái" [value]="selectedStatus()" (selectionChange)="onStatusChange($event.value)">
+          <mat-select-trigger>
+            @if (selectedStatus()) {
+              <span class="select-option-content"><mat-icon class="icon-inline" aria-hidden="true">{{ statusIcon(selectedStatus()) }}</mat-icon>{{ statusLabel(selectedStatus()) }}</span>
+            } @else {
+              Tất cả trạng thái
+            }
+          </mat-select-trigger>
+          <mat-option value="">Tất cả</mat-option>
+          @for (st of statuses(); track st) {
+            <mat-option [value]="st"><span class="select-option-content"><mat-icon class="icon-inline" aria-hidden="true">{{ statusIcon(st) }}</mat-icon>{{ statusLabel(st) }}</span></mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      @if (selectedCategory() || selectedStatus() || keyword()) {
+        <button class="btn btn-ghost btn-sm" (click)="clearFilters()"><mat-icon aria-hidden="true">close</mat-icon>Xóa bộ lọc</button>
+      }
+    </div>
+
+    @if (errorMessage()) {
+      <div class="alert alert-error">{{ errorMessage() }}</div>
+    }
+
+    <!-- Loading -->
+    @if (loading()) {
+      <div class="loading">Đang tải...</div>
+    }
+
+    <!-- Empty state -->
+    @if (!loading() && books().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon"><mat-icon aria-hidden="true">local_library</mat-icon></div>
+        <h3>Chưa có cuốn sách nào</h3>
+        <p>Bắt đầu thêm những cuốn sách yêu thích của bạn!</p>
+        <button class="btn btn-primary" (click)="openCreate()"><mat-icon aria-hidden="true">add</mat-icon>Thêm cuốn sách đầu tiên</button>
+      </div>
+    }
+
+    <!-- Book grid -->
+    @if (!loading() && books().length > 0) {
+      <div class="book-grid">
+        @for (book of books(); track book.id) {
+          <div class="book-card">
+            <div class="book-cover" (click)="openDetail(book)" style="cursor: pointer">
+              @if (book.coverUrl) {
+                <img [src]="book.coverUrl" [alt]="book.title" (error)="$event.target.src = 'assets/no-cover.png'" />
+              } @else {
+                <div class="cover-placeholder">{{ book.title.charAt(0) }}</div>
+              }
+            </div>
+            <div class="book-info" (click)="openDetail(book)" style="cursor: pointer">
+              <h3 class="book-title" [title]="book.title">{{ book.title }}</h3>
+              <p class="book-author">{{ book.author || 'Chưa rõ tác giả' }}</p>
+              <div class="book-meta">
+                @if (book.category) {
+                  <span class="badge badge-category">{{ book.category }}</span>
+                }
+                <span class="badge" [ngClass]="statusClass(book.status)"><mat-icon class="icon-inline" aria-hidden="true">{{ statusIcon(book.status) }}</mat-icon>{{ statusLabel(book.status) }}</span>
+                @if (book.rating > 0) {
+                  <span class="rating"><mat-icon class="icon-inline" aria-hidden="true">star</mat-icon>{{ book.rating }}/5</span>
+                }
+              </div>
+              @if (book.description) {
+                <p class="book-desc">{{ book.description }}</p>
+              }
+            </div>
+            <div class="book-actions">
+              <button class="btn btn-ghost btn-sm" (click)="openEdit(book)"><mat-icon aria-hidden="true">edit</mat-icon>Sửa</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteBook(book)"><mat-icon aria-hidden="true">delete</mat-icon>Xóa</button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </main>
+</div>
+
+@if (showForm) {
+  <app-book-form
+    [book]="editingBook"
+    [categories]="categories()"
+    (saved)="onFormSaved()"
+    (cancelled)="onFormCancelled()"
+  />
+}
+
+@if (selectedBook) {
+  <app-book-detail
+    [book]="selectedBook"
+    (closed)="closeDetail()"
+  />
+}
+
+@if (pendingDelete) {
+  <app-confirm-dialog
+    title="Xóa sách"
+    [message]="'Bạn có chắc chắn muốn xóa cuốn sách \u201C' + pendingDelete.title + '\u201D không? Hành động này không thể hoàn tác.'"
+    confirmText="Xóa"
+    cancelText="Hủy"
+    (confirmed)="confirmDelete()"
+    (cancelled)="cancelDelete()"
+  />
+}

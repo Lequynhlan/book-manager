@@ -1,0 +1,58 @@
+# Dependencies and generated builds
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+backend/target/
+
+# IDE and editor metadata
+.idea/
+.vscode/
+*.iml
+*.code-workspace
+
+# Logs, caches and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*.pid
+coverage/
+.cache/
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local environment and secret overrides
+.env
+.env.*
+!.env.example
+application-local.yml
+application-local.yaml
+
+# AI working documents and generated report artifacts
+frontend/docs/superpowers/
+frontend/.superpowers/
+frontend/.google-docs-assets/
+frontend/.google-docs-work/
+report-assets/
+backend/scripts/capture_report_assets.py
+backend/scripts/check_report_docx.py
+backend/scripts/make_report_docx.py
+backend/scripts/make_report_pdf.py
+backend/scripts/add_covers.py
+backend/scripts/cleanup.py
+frontend/scripts/
+
+# Submission documents, archives and UI captures
+*.doc
+*.docx
+*.pdf
+*.zip
+frontend/shot-*.png
+
+# Runtime leftovers
+backend/*.log

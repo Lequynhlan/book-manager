@@ -1,0 +1,201 @@
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  --application-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--application-font);
+  background: #f1f5f9;
+  color: #1e293b;
+  -webkit-font-smoothing: antialiased;
+}
+
+mat-icon {
+  flex-shrink: 0;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.icon-inline {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  line-height: 18px;
+  vertical-align: middle;
+}
+
+.select-option-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Material dropdowns are portalled outside component modals. */
+.cdk-overlay-container {
+  z-index: 1500;
+}
+
+.mat-mdc-select-panel {
+  background: #fff !important;
+}
+
+.material-select {
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-container-vertical-padding: 8px;
+  --mdc-outlined-text-field-container-color: #fff;
+  --mat-form-field-outlined-container-shape: 8px;
+  --mat-form-field-outlined-outline-color: #cbd5e1;
+  --mat-form-field-outlined-hover-outline-color: #cbd5e1;
+  --mat-form-field-outlined-focus-outline-color: #667eea;
+  --mat-form-field-outlined-outline-width: 1px;
+  --mat-form-field-outlined-focus-outline-width: 1px;
+  --mat-select-enabled-trigger-text-color: #1e293b;
+  --mat-select-enabled-placeholder-text-color: #94a3b8;
+  --mat-select-enabled-arrow-color: #64748b;
+  --mat-select-focused-arrow-color: #64748b;
+  --mat-select-trigger-text-font: var(--application-font);
+  --mat-select-trigger-text-size: 14px;
+  font-size: 14px;
+}
+
+.search-input,
+.form-group input,
+.material-select .mat-mdc-select-trigger {
+  font-family: var(--application-font);
+}
+
+.material-select .mat-mdc-text-field-wrapper {
+  height: 40px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.material-select .mdc-notched-outline__leading {
+  border-radius: 8px 0 0 8px;
+}
+
+.material-select .mdc-notched-outline__trailing {
+  border-radius: 0 8px 8px 0;
+}
+
+.material-select.mat-focused .mat-mdc-text-field-wrapper {
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.material-select .mat-mdc-select-placeholder,
+.select-placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
+/* Material dropdowns are portalled outside component modals. */
+.cdk-overlay-container {
+  z-index: 1500;
+}
+
+.mat-mdc-select-panel {
+  background: #fff !important;
+  border-radius: 12px !important;
+  padding: 6px !important;
+}
+
+.mat-mdc-option {
+  border-radius: 8px !important;
+  --mat-option-label-text-size: 14px;
+  --mat-option-container-shape: 8px;
+  min-height: 36px !important;
+}
+
+.mat-mdc-select-panel {
+  max-height: 264px !important;
+}
+
+/* Icon trong option dropdown (panel ngoài component): ép khung 14px + căn giữa.
+   Glyph Material lệch tâm quang học theo từng icon — "Đang đọc" trôi xuống. */
+.mat-mdc-select-panel .mat-mdc-option .mat-icon {
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+  line-height: 14px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-mdc-select-panel .mat-mdc-option .select-option-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ===== Toast (MatSnackBar) — góc trên phải, có icon ===== */
+.app-toast {
+  border-radius: 10px !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18) !important;
+  min-width: 280px;
+  max-width: 420px;
+}
+
+.app-toast .mdc-snackbar__surface {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+}
+
+.app-toast .mat-mdc-snack-bar-label {
+  padding: 0 !important;
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 14px 16px;
+  border-radius: 10px;
+}
+
+.toast-icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  line-height: 20px;
+  flex-shrink: 0;
+}
+
+.app-toast-success .toast-content {
+  background: #16a34a;
+}
+
+.app-toast-error .toast-content {
+  background: #dc2626;
+}
+
+/* Icon trong option dropdown (panel ngoài component): ép khung 14px + căn giữa.
+   Glyph Material lệch tâm quang học theo từng icon — "Đang đọc" trôi xuống. */
+.mat-mdc-option[aria-label*="Đang đọc"] .mat-icon,
+.mat-mdc-option[aria-label*="Đang đọc"] .icon-inline {
+  translate: 0 -1px;
+}
+
+/* Khi select đã chọn giá trị (class has-value): ẩn mũi tên, chỉ còn ✕ */
+.has-value .mat-mdc-select-arrow {
+  display: none !important;
+}
+
+/* ✕ xóa chọn bị Material cắt mép phải (mat-mdc-select-value/value-text
+   overflow:hidden + text-overflow:ellipsis + padding) — ép về đúng mép phải
+   của ô và cho thoát khỏi vùng cắt để vòng tròn ✕ không bị "xẻ". */
+.mat-mdc-select-value,
+.mat-mdc-select-value-text {
+  overflow: visible !important;
+}
+
+.material-select .mat-mdc-select-trigger {
+  padding-right: 8px;
+}
