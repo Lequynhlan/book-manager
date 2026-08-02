@@ -1,7 +1,9 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(30, 10, 60, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,7 +18,7 @@
   max-width: 400px;
   padding: 28px 24px 24px;
   text-align: center;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 24px 64px rgba(13, 148, 136, 0.35);
   animation: pop 0.18s ease-out;
 }
 
@@ -40,7 +42,7 @@
   height: 44px;
   font-size: 44px;
   line-height: 44px;
-  color: #dc2626;
+  color: #f43f5e;
 }
 
 .confirm-title {
@@ -85,13 +87,17 @@
 
 .btn-ghost:hover {
   background: #f1f5f9;
+  color: #334155;
 }
 
 .btn-danger {
-  background: #dc2626;
+  background: linear-gradient(135deg, #f43f5e 0%, #dc2626 100%);
   color: #fff;
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.35);
 }
 
 .btn-danger:hover {
-  background: #b91c1c;
+  background: linear-gradient(135deg, #e11d48 0%, #b91c1c 100%);
+  box-shadow: 0 10px 24px rgba(220, 38, 38, 0.45);
+  transform: translateY(-1px);
 }

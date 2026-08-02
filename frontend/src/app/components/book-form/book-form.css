@@ -1,7 +1,9 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(30, 10, 60, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,7 +19,7 @@
   max-width: 640px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 24px 64px rgba(13, 148, 136, 0.35);
 }
 
 .modal-header {
@@ -28,7 +30,7 @@
   border-bottom: 1px solid #f1f5f9;
   position: sticky;
   top: 0;
-  background: #fff;
+  background: linear-gradient(135deg, #34d399 0%, #14b8a6 50%, #0ea5e9 100%);
   border-radius: 16px 16px 0 0;
   z-index: 1;
 }
@@ -36,7 +38,9 @@
 .modal-header h3 {
   margin: 0;
   font-size: 18px;
-  color: #1e293b;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(13, 148, 136, 0.4);
 }
 
 .modal-close {
@@ -44,21 +48,22 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-  color: #64748b;
+  color: rgba(255, 255, 255, 0.85);
   padding: 4px 8px;
   border-radius: 6px;
   outline: none;
   -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, color 0.15s;
 }
 
 /* Material thêm focus indicator màu xanh + bóng khi nút bị focus (autofocus khi mở modal)
-   — tắt để nút luôn phẳng xám như thiết kế. */
+   — tắt để nút luôn phẳng như thiết kế. */
 .modal-close:focus,
 .modal-close:focus-visible,
 .modal-close:active,
 .modal-close:hover {
-  background: #f1f5f9;
-  color: #1e293b;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
   box-shadow: none;
   outline: none;
 }
@@ -113,13 +118,14 @@ form {
 .form-group textarea {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   font-size: 14px;
   box-sizing: border-box;
   font-family: inherit;
   background: #fff;
   color: #1e293b;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .form-group input {
@@ -139,8 +145,8 @@ form {
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
 }
 
 .form-group textarea {
@@ -236,12 +242,16 @@ form {
 }
 
 .btn-primary {
-  background: #667eea;
+  background: linear-gradient(135deg, #10b981 0%, #14b8a6 50%, #0ea5e9 100%);
+  background-size: 160% 160%;
   color: #fff;
+  box-shadow: 0 6px 16px rgba(20, 184, 166, 0.4);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #5a6fd6;
+  background-position: 100% 50%;
+  box-shadow: 0 10px 24px rgba(20, 184, 166, 0.5);
+  transform: translateY(-1px);
 }
 
 .btn-primary:disabled {
@@ -257,6 +267,7 @@ form {
 
 .btn-ghost:hover {
   background: #f1f5f9;
+  color: #334155;
 }
 
 .modal-footer {
