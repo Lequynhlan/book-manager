@@ -3,7 +3,7 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "analytics": "df0974c9-0d55-45d8-ab60-cf225930ee7c"
+    "analytics": "f23fae6b-6465-437a-9d4b-f2cfb0d94df4"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -77,10 +77,13 @@
               "sourceMap": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "allowedHosts": ["app.vnseeeems.io.vn", "vnseeeems.io.vn", ".vnseeeems.io.vn", "localhost"]
+          },
           "configurations": {
             "production": {
               "buildTarget": "frontend:build:production"

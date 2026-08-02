@@ -4,7 +4,9 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthResponse } from '../models/models';
 
-export const API_URL = 'http://localhost:8080/api';
+export const API_URL = typeof window !== 'undefined' && window.location.hostname.includes('vnseeeems.io.vn')
+  ? `${window.location.protocol}//api.vnseeeems.io.vn/api`
+  : 'http://localhost:8080/api';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
