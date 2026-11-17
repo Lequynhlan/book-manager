@@ -1,0 +1,1 @@
+Tài liệu demo: endpoint `security-demo` chỉ đọc trong thư mục fixture cục bộ.

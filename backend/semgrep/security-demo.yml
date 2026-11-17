@@ -1,0 +1,26 @@
+rules:
+  - id: java-path-traversal
+    languages: [java]
+    mode: taint
+    severity: WARNING
+    message: Untrusted HTTP input reaches a file read or write path; validate canonical paths and enforce a trusted root.
+    pattern-sources:
+      - pattern-either:
+          - pattern: $REQ.getParameter(...)
+          - pattern: $REQ.getHeader(...)
+          - pattern: $REQ.getQueryString()
+    pattern-sinks:
+      - pattern-either:
+          - pattern: Files.readString(...)
+          - pattern: Files.readAllBytes(...)
+          - pattern: Files.newInputStream(...)
+          - pattern: Files.newOutputStream(...)
+          - pattern: new FileInputStream(...)
+          - pattern: new FileReader(...)
+          - pattern: new FileOutputStream(...)
+          - pattern: new FileWriter(...)
+    metadata:
+      category: security
+      confidence: medium
+      cwe: CWE-22
+      owasp: A01 Broken Access Control
